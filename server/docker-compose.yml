@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  server:
+    container_name: bid
+    networks:
+      shared-networks:
+        ipv4_address: 192.168.101.79
+    build:
+      context: ./
+      dockerfile: dockerfile
+    ports:
+      - "9001:9001"
+    env_file:
+      - ./.env
+    volumes:
+      - shared-data:/bid
+
+volumes:
+  shared-data:
+
+
+networks:
+  shared-networks:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.101.0/24
